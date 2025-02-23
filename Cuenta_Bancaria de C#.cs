@@ -1,21 +1,24 @@
-﻿using System;
+using System;
 
 class CuentaBancaria
 {
-    // Atributos privados
     private string titular;
     private decimal saldo;
 
-    // Constructor
     public CuentaBancaria(string titular, decimal saldoInicial)
     {
         this.titular = titular;
         this.saldo = saldoInicial;
     }
 
-    // Método para depositar dinero
+    public string Titular()
+    {
+        return titular;
+    }
+
     public void Depositar(decimal monto)
     {
+        Console.WriteLine($"\nTitular de la cuenta: {titular}");
         if (monto > 0)
         {
             saldo += monto;
@@ -27,9 +30,9 @@ class CuentaBancaria
         }
     }
 
-    // Método para retirar dinero
     public void Retirar(decimal monto)
     {
+        Console.WriteLine($"\nTitular de la cuenta: {titular}");
         if (monto > 0 && monto <= saldo)
         {
             saldo -= monto;
@@ -45,7 +48,6 @@ class CuentaBancaria
         }
     }
 
-    // Método para mostrar información de la cuenta
     public void MostrarInformacion()
     {
         Console.WriteLine("\n----------------------------------");
@@ -59,12 +61,10 @@ class Program
 {
     static void Main()
     {
-        // Instanciando cuentas bancarias
         CuentaBancaria cuenta1 = new CuentaBancaria("Penencio Rodriguez", 3000m);
         CuentaBancaria cuenta2 = new CuentaBancaria("Ana Perez", 5000m);
         CuentaBancaria cuenta3 = new CuentaBancaria("Carlos Gomez", 7000m);
 
-        // Menú de opciones
         while (true)
         {
             Console.WriteLine("\nMenú de operaciones:");
@@ -74,8 +74,7 @@ class Program
             Console.WriteLine("4. Salir");
             Console.Write("Seleccione una opción: ");
 
-            int opcion;
-            if (!int.TryParse(Console.ReadLine(), out opcion))
+            if (!int.TryParse(Console.ReadLine(), out int opcion))
             {
                 Console.WriteLine("Ingrese un número válido.");
                 continue;
@@ -88,8 +87,7 @@ class Program
             }
 
             Console.Write("Ingrese el número de cuenta (1, 2 o 3): ");
-            int numCuenta;
-            if (!int.TryParse(Console.ReadLine(), out numCuenta) || numCuenta < 1 || numCuenta > 3)
+            if (!int.TryParse(Console.ReadLine(), out int numCuenta) || numCuenta < 1 || numCuenta > 3)
             {
                 Console.WriteLine("Número de cuenta inválido.");
                 continue;
@@ -99,29 +97,23 @@ class Program
 
             if (opcion == 1)
             {
-                Console.Write("Ingrese el monto a depositar: ");
-                decimal monto;
-                if (decimal.TryParse(Console.ReadLine(), out monto))
+                Console.Write($"Ingrese el monto a depositar en la cuenta de {cuentaSeleccionada.Titular()}: ");
+                if (!decimal.TryParse(Console.ReadLine(), out decimal monto))
                 {
-                    cuentaSeleccionada.Depositar(monto);
+                    Console.WriteLine("Monto inválido. Intente de nuevo.");
+                    continue;
                 }
-                else
-                {
-                    Console.WriteLine("Ingrese un monto válido.");
-                }
+                cuentaSeleccionada.Depositar(monto);
             }
             else if (opcion == 2)
             {
-                Console.Write("Ingrese el monto a retirar: ");
-                decimal monto;
-                if (decimal.TryParse(Console.ReadLine(), out monto))
+                Console.Write($"Ingrese el monto a retirar de la cuenta de {cuentaSeleccionada.Titular()}: ");
+                if (!decimal.TryParse(Console.ReadLine(), out decimal monto))
                 {
-                    cuentaSeleccionada.Retirar(monto);
+                    Console.WriteLine("Monto inválido. Intente de nuevo.");
+                    continue;
                 }
-                else
-                {
-                    Console.WriteLine("Ingrese un monto válido.");
-                }
+                cuentaSeleccionada.Retirar(monto);
             }
             else if (opcion == 3)
             {
