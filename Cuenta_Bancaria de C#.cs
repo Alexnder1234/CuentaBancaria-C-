@@ -1,5 +1,7 @@
 using System;
-
+// Autor: Alexander Guzman Vasquez //
+// Fecha: 23-02-2025 //
+// Descripción: Implementación de Cuenta Bancaria en C# //
 class CuentaBancaria
 {
     private string titular;
